@@ -1,0 +1,28 @@
+{
+  "name": "controller",
+  "version": "1.0.0",
+  "description": "Controller DIY",
+  "main": "server.js",
+  "dependencies": {
+    "bleno": "^0.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/keysim/controller.git"
+  },
+  "keywords": [
+    "keysim",
+    "controller",
+    "diy"
+  ],
+  "author": "Keysim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keysim/controller/issues"
+  },
+  "homepage": "https://github.com/keysim/controller#readme"
+}
