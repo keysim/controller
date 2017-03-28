@@ -34,9 +34,9 @@ bleno.on('advertisingStart', function(error) {
                 characteristics : [
 
                     // Define a new characteristic within that service
-                    new bleno.Characteristic({
+                    new bleno.Characteristic({//34cd
                         value : null,
-                        uuid : '34cd',
+                        uuid : '00001101-0000-1000-8000-00805f9b34fb',
                         properties : ['notify', 'read', 'write'],
 
                         // If the client subscribes, we send out a message every 1 second
