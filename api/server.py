@@ -12,7 +12,7 @@ def on_reconnect():
 def on_aaa_response(*args):
     print('on_aaa_response', args)
 
-socketIO = SocketIO('localhost', 8000)
+socketIO = SocketIO('192.168.1.100', 8000)
 socketIO.on('connect', on_connect)
 socketIO.on('disconnect', on_disconnect)
 socketIO.on('reconnect', on_reconnect)
