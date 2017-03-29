@@ -4,7 +4,8 @@
   "description": "Controller DIY",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {},
   "scripts": {
