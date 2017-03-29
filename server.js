@@ -9,6 +9,9 @@ io.on('connection', function(socket){
         console.log("PENIS : ", msg);
         //io.emit('chat message', msg);
     });
+    setInterval(function (){
+        io.emit('aaa_response', "CACA");
+    }, 1000);
 });
 
 http.listen(8000, "0.0.0.0", function(){
