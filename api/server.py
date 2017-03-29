@@ -1,4 +1,4 @@
-from . import socket_io as io
+import socket_io as io
 
 class Server(io.Server):
     def on_connect(self, client):
