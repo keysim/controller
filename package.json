@@ -4,11 +4,12 @@
   "description": "Controller DIY",
   "main": "server.js",
   "dependencies": {
-    "bleno": "^0.4.2"
+    "express": "^4.15.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
