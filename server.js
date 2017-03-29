@@ -6,7 +6,8 @@ var io                  = require('socket.io')(http);
 io.on('connection', function(socket){
     console.log("Connexion !!!!!");
     socket.on('aaa', function(msg){
-        io.emit('chat message', msg);
+        console.log("PENIS : ", msg);
+        //io.emit('chat message', msg);
     });
 });
 
