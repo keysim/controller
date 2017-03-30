@@ -181,4 +181,4 @@ function newGame() {
     interval = setInterval( tick, 500 );
 }
 
-newGame();
+//newGame();
