@@ -1,5 +1,6 @@
 var COLS = 10, ROWS = 20;
 var board = [];
+var render = [];
 var lose;
 var interval;
 var current; // current moving shape
