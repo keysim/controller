@@ -13,7 +13,7 @@
 <script src="/lib/jquery.min.js"></script>
 <script>
     $(function () {
-        var socket = io("http://localhost:8000/chat");
+        var socket = io("/chat");
         $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
