@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>Game</title>
+    <link rel='stylesheet' href='lib/style.css' />
 </head>
 <body>
+<canvas width='300' height='600'></canvas>
 <ul id="messages"></ul>
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
 <button id="on">ON</button>
 <button id="off">ON</button>
-<script src="/lib/socket.io.js"></script>
-<script src="/lib/jquery.min.js"></script>
+<script src="lib/socket.io.js"></script>
+<script src="lib/jquery.min.js"></script>
+<script src='lib/tetris.js'></script>
+<script src='lib/controller.js'></script>
+<script src='lib/render.js'></script>
 <script>
     $(function () {
         var socket = io("/chat");
@@ -25,10 +30,10 @@
             $('#messages').append($('<li>').text(msg));
         });
         $("#on").click(function () {
-            socket.emit('1', "PENIS");
+            socket.emit('1', "test");
         });
         $("#off").click(function () {
-            socket.emit('0', "PAS PENIS");
+            socket.emit('0', "test");
         });
     });
 </script>

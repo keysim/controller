@@ -14,14 +14,14 @@ app = Flask(__name__, static_url_path='', template_folder='')
 sock.connect((keyduino, port))
 
 
-@app.route('/lib/<path:path>')
+@app.route('/game/<path:path>')
 def send_js(path):
-    return send_from_directory('lib', path)
+    return send_from_directory('game', path)
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('game/index.html')
 
 
 @sio.on('connect', namespace='/chat')
