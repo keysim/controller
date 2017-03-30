@@ -13,6 +13,7 @@
 </form>
 <button id="on">ON</button>
 <button id="off">ON</button>
+<button id="connect">Connect BLE</button>
 <script src="lib/socket.io.js"></script>
 <script src="lib/jquery.min.js"></script>
 <script src='lib/tetris.js'></script>
@@ -20,7 +21,7 @@
 <script src='lib/render.js'></script>
 <script>
     $(function () {
-        var socket = io("/chat");
+        var socket = io("/controller");
         $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
@@ -34,6 +35,9 @@
         });
         $("#off").click(function () {
             socket.emit('0', "test");
+        });
+        $("#connect").click(function () {
+            socket.emit("BLE");
         });
     });
 </script>

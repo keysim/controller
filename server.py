@@ -2,8 +2,6 @@ import socketio
 import eventlet
 import eventlet.wsgi
 import bluetooth
-import time
-import sys
 from flask import Flask, render_template, send_from_directory
 
 
@@ -13,8 +11,6 @@ sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
 sio = socketio.Server()
 app = Flask(__name__, static_url_path='', template_folder='')
-if len(sys.argv) > 0 and sys.argv[0] == "noBLE":
-    sock.connect((keyduino, port))
 
 
 @app.route('/game/<path:path>')
@@ -27,26 +23,31 @@ def index():
     return render_template('game/index.html')
 
 
-@sio.on('connect', namespace='/chat')
+@sio.on('connect', namespace='/controller')
 def connect(sid, environ):
     print("connect ", sid)
 
 
-@sio.on('1', namespace='/chat')
+@sio.on('1', namespace='/controller')
 def message(sid, data):
     sock.send("1")
     print("message ", data)
     # sio.emit('reply', room=sid)
 
 
-@sio.on('0', namespace='/chat')
+@sio.on('0', namespace='/controller')
 def message(sid, data):
     sock.send("0")
     print("message ", data)
     # sio.emit('reply', room=sid)
 
 
-@sio.on('disconnect', namespace='/chat')
+@sio.on('BLE', namespace='/controller')
+def connect_ble(sid, data):
+    sock.connect((keyduino, port))
+
+
+@sio.on('disconnect', namespace='/controller')
 def disconnect(sid):
     print('disconnect ', sid)
 
