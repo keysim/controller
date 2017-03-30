@@ -1,35 +1,32 @@
-from socketIO_client import SocketIO
+import socketio
+import eventlet
+import eventlet.wsgi
+from flask import Flask, render_template
 
-def on_connect():
-    print('connect')
+sio = socketio.Server()
+app = Flask(__name__)
 
-def on_disconnect():
-    print('disconnect')
+@app.route('/')
+def index():
+    """Serve the client-side application."""
+    return render_template('../index.html')
 
-def on_reconnect():
-    print('reconnect')
+@sio.on('connect', namespace='/chat')
+def connect(sid, environ):
+    print("connect ", sid)
 
-def on_aaa_response(*args):
-    print('on_aaa_response', args)
+@sio.on('chat message', namespace='/chat')
+def message(sid, data):
+    print("message ", data)
+    sio.emit('reply', room=sid)
 
-socketIO = SocketIO('192.168.1.100', 8000)
-socketIO.on('connect', on_connect)
-socketIO.on('disconnect', on_disconnect)
-socketIO.on('reconnect', on_reconnect)
+@sio.on('disconnect', namespace='/chat')
+def disconnect(sid):
+    print('disconnect ', sid)
 
-# Listen
-socketIO.on('aaa_response', on_aaa_response)
-socketIO.emit('aaa')
-socketIO.emit('aaa')
-socketIO.wait(seconds=1)
+if __name__ == '__main__':
+    # wrap Flask application with engineio's middleware
+    app = socketio.Middleware(sio, app)
 
-# Stop listening
-socketIO.off('aaa_response')
-socketIO.emit('aaa')
-socketIO.wait(seconds=1)
-
-# Listen only once
-socketIO.once('aaa_response', on_aaa_response)
-socketIO.emit('aaa')  # Activate aaa_response
-socketIO.emit('aaa')  # Ignore
-socketIO.wait(seconds=1)
+    # deploy as an eventlet WSGI server
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 8000)), app&)
