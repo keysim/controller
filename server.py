@@ -18,7 +18,7 @@ app = Flask(__name__, static_url_path='', template_folder='')
 sock.connect((keyduino, port))
 
 
-@app.route('/lib/<path:path>')
+@app.route('/game/lib/<path:path>')
 def send_js(path):
     return send_from_directory('game/lib/', path)
 
