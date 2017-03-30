@@ -8,6 +8,8 @@ print("Starting BLE...")
 
 keyduino = "20:14:04:09:11:63"
 port = 1
+buf = ""
+good = ""
 size = 1024
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
@@ -22,9 +24,12 @@ while 1:
     data = sock.recv(size)
     if data:
         if data.endswith(b';'):
-            print("Prout")
+            buf += data
+            good = buf
+            print(good)
+            buf = ""
         else:
-            print(data)
+            buf += data
 
 
 #
