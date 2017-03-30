@@ -21,9 +21,9 @@ app = Flask(__name__, static_url_path='', template_folder='')
 sock.connect((keyduino, port))
 
 while 1:
-    data = sock.recv(size)
+    data = sock.recv(size).decode('utf-8')
     if data:
-        if data.endswith(b';'):
+        if data.endswith(';'):
             buf += data
             good = buf
             print(good)
