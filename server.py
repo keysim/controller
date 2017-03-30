@@ -21,11 +21,10 @@ sock.connect((keyduino, port))
 while 1:
     data = sock.recv(size)
     if data:
-        for i in range(0, len(data)):
-            if data[i] == ';':
-                print("Prout")
-            else:
-                print(data[i])
+        if data.endswith(';'):
+            print("Prout")
+        else:
+            print(data)
 
 
 #
