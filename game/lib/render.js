@@ -16,7 +16,7 @@ function render() {
     ctx.strokeStyle = 'black';
     for ( var x = 0; x < COLS; ++x ) {
         for ( var y = 0; y < ROWS; ++y ) {
-            if ( board[ y ][ x ] ) {
+            if ( board[ y ] && board[ y ][ x ] ) {
                 ctx.fillStyle = colors[ board[ y ][ x ] - 1 ];
                 drawBlock( x, y );
             }
@@ -27,7 +27,7 @@ function render() {
     ctx.strokeStyle = 'black';
     for ( var y = 0; y < 4; ++y ) {
         for ( var x = 0; x < 4; ++x ) {
-            if ( current[ y ][ x ] ) {
+            if ( current[ y ] && current[ y ][ x ] ) {
                 ctx.fillStyle = colors[ current[ y ][ x ] - 1 ];
                 drawBlock( currentX + x, currentY + y );
             }
