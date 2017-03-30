@@ -4,7 +4,7 @@ import eventlet.wsgi
 from flask import Flask, render_template, send_from_directory
 
 sio = socketio.Server()
-app = Flask(__name__, static_url_path='')#template_folder='',
+app = Flask(__name__, static_url_path='', template_folder='')
 
 @app.route('/lib/<path:path>')
 def send_js(path):
@@ -12,7 +12,7 @@ def send_js(path):
 @app.route('/')
 def index():
     """Serve the client-side application."""
-    return app.send_static_file('index.html')#render_template('index.html')
+    return render_template('index.html')
 
 @sio.on('connect', namespace='/chat')
 def connect(sid, environ):
