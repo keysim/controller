@@ -1,11 +1,14 @@
 import socketio
 import eventlet
 import eventlet.wsgi
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 sio = socketio.Server()
-app = Flask(__name__, template_folder='../')
+app = Flask(__name__, template_folder='', static_url_path='/lib')
 
+@app.route('/lib/<path:path>')
+def send_js(path):
+    return send_from_directory('js', path)
 @app.route('/')
 def index():
     """Serve the client-side application."""
