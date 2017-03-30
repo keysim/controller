@@ -16,9 +16,6 @@
 <button id="connect">Connect BLE</button>
 <script src="/game/lib/socket.io.js"></script>
 <script src="/game/lib/jquery.min.js"></script>
-<script src='/game/lib/tetris.js'></script>
-<script src='/game/lib/controller.js'></script>
-<script src='/game/lib/render.js'></script>
 <script>
     $(function () {
         var socket = io("/controller");
@@ -41,5 +38,8 @@
         });
     });
 </script>
+<script src='/game/lib/tetris.js'></script>
+<script src='/game/lib/controller.js'></script>
+<script src='/game/lib/render.js'></script>
 </body>
 </html>
