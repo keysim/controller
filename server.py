@@ -4,10 +4,13 @@ import eventlet.wsgi
 import bluetooth
 from flask import Flask, render_template, send_from_directory
 
+print("Starting BLE...")
 
 keyduino = "20:14:04:09:11:63"
 port = 1
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+
+print("Starting socketIO and flask...")
 
 sio = socketio.Server()
 app = Flask(__name__, static_url_path='', template_folder='')
