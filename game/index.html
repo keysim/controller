@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
-    <link rel='stylesheet' href='/game/lib/style.css' />
+    <link rel='stylesheet' href='lib/style.css' />
 </head>
 <body>
 <canvas width='300' height='600'></canvas>
@@ -14,8 +14,8 @@
 <button id="on">ON</button>
 <button id="off">OFF</button>
 <button id="connect">Connect BLE</button>
-<script src="/game/lib/socket.io.js"></script>
-<script src="/game/lib/jquery.min.js"></script>
+<script src="lib/socket.io.js"></script>
+<script src="lib/jquery.min.js"></script>
 <script>
     $(function () {
         var socket = io("/controller");
@@ -38,8 +38,8 @@
         });
     });
 </script>
-<script src='/game/lib/tetris.js'></script>
-<script src='/game/lib/controller.js'></script>
-<script src='/game/lib/render.js'></script>
+<script src='lib/tetris.js'></script>
+<script src='lib/controller.js'></script>
+<script src='lib/render.js'></script>
 </body>
 </html>

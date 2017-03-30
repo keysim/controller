@@ -15,10 +15,12 @@ print("Starting socketIO and flask...")
 sio = socketio.Server()
 app = Flask(__name__, static_url_path='', template_folder='')
 
+sock.connect((keyduino, port))
 
-@app.route('/game/<path:path>')
+
+@app.route('/lib/<path:path>')
 def send_js(path):
-    return send_from_directory('game', path)
+    return send_from_directory('game/lib/', path)
 
 
 @app.route('/')
