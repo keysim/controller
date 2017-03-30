@@ -9,6 +9,8 @@
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
+<button id="on">Penis</button>
+<button id="off">PAS de Penis</button>
 <script src="/lib/socket.io.js"></script>
 <script src="/lib/jquery.min.js"></script>
 <script>
@@ -21,6 +23,12 @@
         });
         socket.on('chat message', function(msg){
             $('#messages').append($('<li>').text(msg));
+        });
+        $("#on").click(function () {
+            socket.emit('1', "PENIS");
+        });
+        $("#off").click(function () {
+            socket.emit('0', "PAS PENIS");
         });
     });
 </script>
