@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Serve the client-side application."""
-    return render_template('../index.html')
+    return render_template('index.html')
 
 @sio.on('connect', namespace='/chat')
 def connect(sid, environ):
