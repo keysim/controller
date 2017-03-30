@@ -21,7 +21,7 @@ sock.connect((keyduino, port))
 while 1:
     data = sock.recv(size)
     if data:
-        if data.endswith(';'):
+        if data.endswith(b';'):
             print("Prout")
         else:
             print(data)
