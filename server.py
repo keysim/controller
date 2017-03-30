@@ -3,7 +3,9 @@ import eventlet
 import eventlet.wsgi
 import bluetooth
 import time
+import sys
 from flask import Flask, render_template, send_from_directory
+
 
 keyduino = "20:14:04:09:11:63"
 port = 1
@@ -11,7 +13,8 @@ sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
 sio = socketio.Server()
 app = Flask(__name__, static_url_path='', template_folder='')
-sock.connect((keyduino, port))
+if len(sys.argv) > 0 and sys.argv[0] == "noBLE":
+    sock.connect((keyduino, port))
 
 
 @app.route('/game/<path:path>')
