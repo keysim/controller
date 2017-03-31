@@ -70,7 +70,7 @@ def message(sid, data):
 def message(sid, data):
     sock.send("0")
     print("OFF ", data)
-    sio.broacast('input')
+    sio.broadcast('input')
 
 
 @sio.on('BLE', namespace='/controller')
