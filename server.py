@@ -112,17 +112,19 @@ thread = None
 print("Starting socketIO and flask...")
 
 sock.connect((keyduino, port))
-sock.settimeout(0.1)
+sock.settimeout(0.05)
 
 
 def background_thread():
     print("Background thread started...")
     while True:
         socketio.sleep(0.05)
-        data = sock.recv(size).decode('utf-8')
-        if data:
+        try:
+            data = sock.recv(size).decode('utf-8')
             socketio.emit('input', {'data': data})
             print("data sent !")
+        except:
+            data = ""
     # while 1:
     #     data = sock.recv(size).decode('utf-8')
     #     if data:
