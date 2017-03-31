@@ -91,10 +91,45 @@
 
 from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO, emit
+import threading
+import bluetooth
 
 app = Flask(__name__, template_folder='game')
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
+
+print("Starting BLE...")
+
+keyduino = "20:14:04:09:11:63"
+port = 1
+size = 1024
+room = ""
+sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+
+print("Starting socketIO and flask...")
+
+sock.connect((keyduino, port))
+
+
+def bt_read():
+    global room
+    buf = ""
+    good = ""
+    while 1:
+        data = sock.recv(size).decode('utf-8')
+        if data:
+            if data.endswith(';'):
+                buf += data
+                good = buf
+                emit('input', good)
+                print(good)
+                print(room)
+                buf = ""
+            else:
+                buf += data
+
+thr = threading.Thread(target=bt_read, args=(), kwargs={})
+thr.start()
 
 
 @app.route('/')
@@ -110,6 +145,11 @@ def send_js(path):
 @socketio.on('1')
 def test_message(message):
     emit('input', {'data': 'got it!'})
+
+
+@socketio.on('connect')
+def connect(sid, environ):
+    print("connect ", sid)
 
 if __name__ == '__main__':
     socketio.run(app, '0.0.0.0')
