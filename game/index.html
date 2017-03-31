@@ -8,6 +8,7 @@
 <body>
 <canvas width='300' height='600'></canvas>
 <ul id="messages"></ul>
+<div id="0"></div><div id="1"></div><div id="2"></div><div id="3"></div>
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
@@ -20,6 +21,9 @@
 <script src='/game/lib/controller.js'></script>
 <script src='/game/lib/render.js'></script>
 <script>
+    var place = 0;
+    var input = ["", "", "", ""];
+    var ready = false;
     $(function () {
         var socket = io("/");
         $('form').submit(function(){
@@ -28,7 +32,21 @@
             return false;
         });
         socket.on('input', function(msg){
-            console.log(msg);
+            if(msg.indexOf(';') != -1)
+                ready = true;
+            for(var c of msg.data){
+                if(c != ";") {
+                    input[place] = c;
+                    place++;
+                    if (place >= 4)
+                        place = 0;
+                }
+            }
+            if(ready){
+                for(var i = 0; i < 4; i++)
+                $("#" + i).text(input[i]);
+                ready = false;
+            }
             //$('#messages').append($('<li>').text(msg.data));
         });
         $("#on").click(function () {
