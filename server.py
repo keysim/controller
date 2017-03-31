@@ -122,7 +122,7 @@ def bt_read():
                 buf += data
                 good = buf
                 with app.test_request_context('/'):
-                    socketio.emit('input', {'data': 'toto !'})
+                    socketio.emit('input', {'data': 'toto !'}, namespace='/test')
                 print(good)
                 buf = ""
             else:
@@ -147,14 +147,14 @@ def test_message(message):
     emit('input', {'data': 'got it!'})
 
 
-@socketio.on('input')
-def send_input():
-    print("penis !")
-
-
 @socketio.on('connect')
 def connect():
     print("connected !")
+
+
+@socketio.on('input', namespace='/test')
+def send_input():
+    print("penis !")
 
 if __name__ == '__main__':
     socketio.run(app, '0.0.0.0')
