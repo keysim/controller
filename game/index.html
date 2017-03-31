@@ -68,7 +68,7 @@
         $("#connect").click(function () {
             socket.emit("BLE", "on");
         });
-        setInterval( tickCheck, 200 );
+        setInterval( tickCheck, 100 );
         function tickCheck() {
             //states = [false, false, false, false];
             if(input[0] == "1")
