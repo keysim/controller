@@ -118,8 +118,9 @@ def background_thread():
     print("Background thread started...")
     while True:
         socketio.sleep(1)
-        # data = sock.recv(size).decode('utf-8')
-        socketio.emit('input', {'data': "test"})
+        data = sock.recv(size).decode('utf-8')
+        if data:
+            socketio.emit('input', {'data': data})
     # while 1:
     #     data = sock.recv(size).decode('utf-8')
     #     if data:
