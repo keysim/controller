@@ -114,26 +114,26 @@ print("Starting socketIO and flask...")
 sock.connect((keyduino, port))
 
 
-# def background_thread():
-#     global room
-#     buf = ""
-#     good = ""
-#     while 1:
-#         data = sock.recv(size).decode('utf-8')
-#         if data:
-#             if data.endswith(';'):
-#                 buf += data
-#                 good = buf
-#                 socketio.emit('input', {'data': 'toto !'})
-#                 print(good)
-#                 buf = ""
-#             else:
-#                 buf += data
+def background_thread():
+    while True:
+        socketio.sleep(10)
+        socketio.emit('input', {'data': 'Server generated event'})
+    # while 1:
+    #     data = sock.recv(size).decode('utf-8')
+    #     if data:
+    #         if data.endswith(';'):
+    #             buf += data
+    #             good = buf
+    #             socketio.emit('input', {'data': 'toto !'})
+    #             print(good)
+    #             buf = ""
+    #         else:
+    #             buf += data
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', async_mode=socketio.async_mode)
 
 
 @app.route('/game/lib/<path:path>')
@@ -145,14 +145,13 @@ def send_js(path):
 def test_message(message):
     print("ON PRESSED")
     emit('input', {'data': 'got it!'})
-    socketio.emit('input', {'data': 'toto !'})
 
 
 @socketio.on('connect')
 def connect():
-    # global thread
-    # if thread is None:
-    #     thread = socketio.start_background_task(target=background_thread)
+    global thread
+    if thread is None:
+        thread = socketio.start_background_task(target=background_thread)
     print("connected !")
 
 
@@ -164,4 +163,4 @@ def send_input():
 # thr.start()
 
 if __name__ == '__main__':
-    socketio.run(app, '0.0.0.0')
+    socketio.run(app, '0.0.0.0', debug=True)
