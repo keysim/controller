@@ -111,27 +111,6 @@ print("Starting socketIO and flask...")
 sock.connect((keyduino, port))
 
 
-def bt_read():
-    global room
-    buf = ""
-    good = ""
-    while 1:
-        data = sock.recv(size).decode('utf-8')
-        if data:
-            if data.endswith(';'):
-                buf += data
-                good = buf
-                with app.test_request_context('/'):
-                    emit('input', {'data': 'toto !'}, namespace='/test')
-                print(good)
-                buf = ""
-            else:
-                buf += data
-
-thr = threading.Thread(target=bt_read, args=(), kwargs={})
-thr.start()
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -156,6 +135,27 @@ def connect():
 @socketio.on('input', namespace='/test')
 def send_input():
     print("penis !")
+
+
+@copy_current_request_context
+def bt_read():
+    global room
+    buf = ""
+    good = ""
+    while 1:
+        data = sock.recv(size).decode('utf-8')
+        if data:
+            if data.endswith(';'):
+                buf += data
+                good = buf
+                emit('input', {'data': 'toto !'})
+                print(good)
+                buf = ""
+            else:
+                buf += data
+
+thr = threading.Thread(target=bt_read, args=(), kwargs={})
+thr.start()
 
 if __name__ == '__main__':
     socketio.run(app, '0.0.0.0')
