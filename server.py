@@ -33,6 +33,7 @@ def bt_read():
                 good = buf
                 sio.emit('input', good, room=room)
                 print(good)
+                print(room)
                 buf = ""
             else:
                 buf += data
@@ -61,15 +62,15 @@ def connect(sid, environ):
 @sio.on('1', namespace='/controller')
 def message(sid, data):
     sock.send("1")
-    print("message ", data)
+    print("ON ", data)
     # sio.emit('reply', room=sid)
 
 
 @sio.on('0', namespace='/controller')
 def message(sid, data):
     sock.send("0")
-    print("message ", data)
-    # sio.emit('reply', room=sid)
+    print("OFF ", data)
+    sio.emit('input', room=sid)
 
 
 @sio.on('BLE', namespace='/controller')
