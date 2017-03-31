@@ -19,6 +19,7 @@ app = Flask(__name__, static_url_path='', template_folder='')
 
 sock.connect((keyduino, port))
 
+
 def bt_read():
     buf = ""
     good = ""
@@ -28,6 +29,7 @@ def bt_read():
             if data.endswith(';'):
                 buf += data
                 good = buf
+                sio.emit('input', good)
                 print(good)
                 buf = ""
             else:
@@ -37,48 +39,47 @@ thr = threading.Thread(target=bt_read, args=(), kwargs={})
 thr.start()
 
 
-#
-# @app.route('/game/lib/<path:path>')
-# def send_js(path):
-#     return send_from_directory('game/lib/', path)
-#
-#
-# @app.route('/')
-# def index():
-#     return render_template('game/index.html')
-#
-#
-# @sio.on('connect', namespace='/controller')
-# def connect(sid, environ):
-#     print("connect ", sid)
-#
-#
-# @sio.on('1', namespace='/controller')
-# def message(sid, data):
-#     sock.send("1")
-#     print("message ", data)
-#     # sio.emit('reply', room=sid)
-#
-#
-# @sio.on('0', namespace='/controller')
-# def message(sid, data):
-#     sock.send("0")
-#     print("message ", data)
-#     # sio.emit('reply', room=sid)
-#
-#
-# @sio.on('BLE', namespace='/controller')
-# def connect_ble(sid, data):
-#     sock.connect((keyduino, port))
-#
-#
-# @sio.on('disconnect', namespace='/controller')
-# def disconnect(sid):
-#     print('disconnect ', sid)
-#
-# if __name__ == '__main__':
-#     app = socketio.Middleware(sio, app)
-#     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 8000)), app)
+@app.route('/game/lib/<path:path>')
+def send_js(path):
+    return send_from_directory('game/lib/', path)
 
-# sock.close()
+
+@app.route('/')
+def index():
+    return render_template('game/index.html')
+
+
+@sio.on('connect', namespace='/controller')
+def connect(sid, environ):
+    print("connect ", sid)
+
+
+@sio.on('1', namespace='/controller')
+def message(sid, data):
+    sock.send("1")
+    print("message ", data)
+    # sio.emit('reply', room=sid)
+
+
+@sio.on('0', namespace='/controller')
+def message(sid, data):
+    sock.send("0")
+    print("message ", data)
+    # sio.emit('reply', room=sid)
+
+
+@sio.on('BLE', namespace='/controller')
+def connect_ble(sid, data):
+    sock.connect((keyduino, port))
+
+
+@sio.on('disconnect', namespace='/controller')
+def disconnect(sid):
+    print('disconnect ', sid)
+
+if __name__ == '__main__':
+    app = socketio.Middleware(sio, app)
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 8000)), app)
+
+sock.close()
 print('END OF SCRIPT')
