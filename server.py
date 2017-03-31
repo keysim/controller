@@ -121,8 +121,8 @@ def bt_read():
             if data.endswith(';'):
                 buf += data
                 good = buf
-                with app.test_request_context('/'):
-                    socketio.emit('input', {'data': 'toto !'}, namespace='/')
+                # with app.test_request_context('/'):
+                socketio.emit('input', {'data': 'toto !'})
                 print(good)
                 buf = ""
             else:
