@@ -25,8 +25,7 @@
     e.which = 37;
     var place = 0;
     var input = ["", "", "", ""];
-    var states = [false, false, false, false];
-    var keyMach = [false, false, false, false]; // left, right, turn right, turn left
+    var states = [false, false];
     var ready = false;
     var important = false;
     $(function () {
@@ -42,6 +41,8 @@
                     ready = true;
                 for (var c of msg.data) {
                     if (c != ";") {
+                        if(place == 2 && input[place] == "1" && c == "0")
+                            states[0] = true;
                         input[place] = c;
                         place++;
                         if (place >= 4)
@@ -53,7 +54,6 @@
                 if (ready) {
                     for (var i = 0; i < 4; i++)
                         $("#" + i).text(input[i]);
-                    important = true;
                     ready = false;
                 }
             }
@@ -75,8 +75,10 @@
                 keyPress("left");
             if(input[0] == "9")
                 keyPress("right");
-            if(input[2] == "1")
+            if(states[0]) {
                 keyPress("rotate");
+                states[0] = false;
+            }
             if(input[1] == "1")
                 keyPress("down");
         }
