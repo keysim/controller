@@ -115,10 +115,11 @@ sock.connect((keyduino, port))
 
 
 def background_thread():
+    print("Background thread started...")
     while True:
         socketio.sleep(1)
-        data = sock.recv(size).decode('utf-8')
-        socketio.emit('input', {'data': data})
+        # data = sock.recv(size).decode('utf-8')
+        socketio.emit('input', {'data': "test"})
     # while 1:
     #     data = sock.recv(size).decode('utf-8')
     #     if data:
