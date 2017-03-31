@@ -70,7 +70,8 @@
         });
         setInterval( tickCheck, 500 );
         function tickCheck() {
-            $("canvas").trigger(e);
+            $("html").trigger(e);
+            console.log("HEY");
             //states = [false, false, false, false];
             //keyPress();
         }
