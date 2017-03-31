@@ -122,7 +122,7 @@ def bt_read():
                 buf += data
                 good = buf
                 with app.test_request_context('/'):
-                    emit('input', good)
+                    emit('input', good, namespace='/test')
                 print(good)
                 print(room)
                 buf = ""
