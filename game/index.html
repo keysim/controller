@@ -27,7 +27,7 @@
             $('#m').val('');
             return false;
         });
-        socket.on('reply', function(msg){
+        socket.on('input', function(msg){
             console.log("HEY");
             $('#messages').append($('<li>').text(msg));
         });
