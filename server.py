@@ -99,7 +99,7 @@ socketio = SocketIO(app)
 
 @app.route('/')
 def index():
-    return render_template('/game/index.html')
+    return render_template('index.html')
 
 
 @app.route('/game/lib/<path:path>')
