@@ -118,7 +118,7 @@ sock.settimeout(0.05)
 def background_thread():
     print("Background thread started...")
     while True:
-        socketio.sleep(0.05)
+        # socketio.sleep(0.05)
         try:
             data = sock.recv(size).decode('utf-8')
             socketio.emit('input', {'data': data})
