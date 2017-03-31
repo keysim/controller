@@ -19,10 +19,6 @@ app = Flask(__name__, static_url_path='', template_folder='')
 
 sock.connect((keyduino, port))
 
-thr = threading.Thread(target=bt_read, args=(), kwargs={})
-thr.start()
-
-
 def bt_read():
     buf = ""
     good = ""
@@ -36,6 +32,9 @@ def bt_read():
                 buf = ""
             else:
                 buf += data
+
+thr = threading.Thread(target=bt_read, args=(), kwargs={})
+thr.start()
 
 
 #
