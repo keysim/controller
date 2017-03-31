@@ -114,21 +114,21 @@ print("Starting socketIO and flask...")
 sock.connect((keyduino, port))
 
 
-def background_thread():
-    global room
-    buf = ""
-    good = ""
-    while 1:
-        data = sock.recv(size).decode('utf-8')
-        if data:
-            if data.endswith(';'):
-                buf += data
-                good = buf
-                socketio.emit('input', {'data': 'toto !'})
-                print(good)
-                buf = ""
-            else:
-                buf += data
+# def background_thread():
+#     global room
+#     buf = ""
+#     good = ""
+#     while 1:
+#         data = sock.recv(size).decode('utf-8')
+#         if data:
+#             if data.endswith(';'):
+#                 buf += data
+#                 good = buf
+#                 socketio.emit('input', {'data': 'toto !'})
+#                 print(good)
+#                 buf = ""
+#             else:
+#                 buf += data
 
 
 @app.route('/')
@@ -149,9 +149,9 @@ def test_message(message):
 
 @socketio.on('connect')
 def connect():
-    global thread
-    if thread is None:
-        thread = socketio.start_background_task(target=background_thread)
+    # global thread
+    # if thread is None:
+    #     thread = socketio.start_background_task(target=background_thread)
     print("connected !")
 
 
