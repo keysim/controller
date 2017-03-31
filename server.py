@@ -121,8 +121,10 @@ def background_thread():
         try:
             data = sock.recv(size).decode('utf-8')
             socketio.emit('input', {'data': data})
-        except socket.error:
+            print("data sent !")
+        except sock.error:
             socketio.emit('input', {'data': "no data yet"})
+            print("no data yet...")
     # while 1:
     #     data = sock.recv(size).decode('utf-8')
     #     if data:
