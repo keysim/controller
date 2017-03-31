@@ -123,7 +123,7 @@ def background_thread():
             data = sock.recv(size).decode('utf-8')
             socketio.emit('input', {'data': data})
             print("data sent !")
-        except socket.timeout:
+        except sock.timeout:
             print("no data yet...")
     # while 1:
     #     data = sock.recv(size).decode('utf-8')
