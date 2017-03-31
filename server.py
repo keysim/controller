@@ -121,8 +121,8 @@ def bt_read():
             if data.endswith(';'):
                 buf += data
                 good = buf
-                # with app.test_request_context('/'):
-                socketio.emit('input', {'data': 'toto !'})
+                with app.test_request_context('/'):
+                    socketio.emit('input', {'data': 'toto !'})
                 print(good)
                 buf = ""
             else:
@@ -145,6 +145,11 @@ def send_js(path):
 @socketio.on('1')
 def test_message(message):
     emit('input', {'data': 'got it!'})
+
+
+@socketio.on('input')
+def send_input():
+    print("penis !")
 
 
 @socketio.on('connect')
