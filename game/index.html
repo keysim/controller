@@ -21,9 +21,14 @@
 <script src='/game/lib/controller.js'></script>
 <script src='/game/lib/render.js'></script>
 <script>
+    e = jQuery.Event("keydown"); // define this once in global scope
+    e.which = 37;
     var place = 0;
     var input = ["", "", "", ""];
+    var states = [false, false, false, false];
+    var keyMach = [false, false, false, false]; // left, right, turn right, turn left
     var ready = false;
+    var important = false;
     $(function () {
         var socket = io("/");
         $('form').submit(function(){
@@ -48,6 +53,7 @@
                 if (ready) {
                     for (var i = 0; i < 4; i++)
                         $("#" + i).text(input[i]);
+                    important = true;
                     ready = false;
                 }
             }
@@ -62,6 +68,12 @@
         $("#connect").click(function () {
             socket.emit("BLE", "on");
         });
+        setInterval( tickCheck, 500 );
+        function tickCheck() {
+            $("canvas").trigger(e);
+            //states = [false, false, false, false];
+            //keyPress();
+        }
     });
 </script>
 </body>
