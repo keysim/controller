@@ -68,10 +68,17 @@
         $("#connect").click(function () {
             socket.emit("BLE", "on");
         });
-        setInterval( tickCheck, 500 );
+        setInterval( tickCheck, 200 );
         function tickCheck() {
             //states = [false, false, false, false];
-            keyPress("left");
+            if(input[0] == "1")
+                keyPress("left");
+            if(input[0] == "9")
+                keyPress("right");
+            if(input[2] == "1")
+                keyPress("rotate");
+            if(input[1] == "1")
+                keyPress("down");
         }
     });
 </script>
