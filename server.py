@@ -122,9 +122,8 @@ def bt_read():
                 buf += data
                 good = buf
                 with app.test_request_context('/'):
-                    socketio.emit('input', good)
+                    socketio.emit('input', {'data': 'toto !'}, namespace='/test')
                 print(good)
-                print(room)
                 buf = ""
             else:
                 buf += data
