@@ -150,15 +150,16 @@ def test_message(message):
 
 @socketio.on('connect')
 def connect():
-    global thread
-    if thread is None:
-        thread = socketio.start_background_task(target=background_thread)
     print("connected !")
 
 
 @socketio.on('input', namespace='/test')
 def send_input():
     print("penis !")
+
+
+if thread is None:
+    thread = socketio.start_background_task(target=background_thread)
 
 # thr = threading.Thread(target=bt_read, args=(), kwargs={})
 # thr.start()
