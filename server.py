@@ -10,6 +10,7 @@ print("Starting BLE...")
 keyduino = "20:14:04:09:11:63"
 port = 1
 size = 1024
+room = ""
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
 print("Starting socketIO and flask...")
@@ -21,6 +22,7 @@ sock.connect((keyduino, port))
 
 
 def bt_read():
+    global room
     buf = ""
     good = ""
     while 1:
@@ -29,7 +31,7 @@ def bt_read():
             if data.endswith(';'):
                 buf += data
                 good = buf
-                sio.emit('input', good)
+                sio.emit('input', good, room=room)
                 print(good)
                 buf = ""
             else:
@@ -51,6 +53,8 @@ def index():
 
 @sio.on('connect', namespace='/controller')
 def connect(sid, environ):
+    global room
+    room = sid
     print("connect ", sid)
 
 
