@@ -94,6 +94,8 @@ from flask_socketio import SocketIO, emit
 # import threading
 import bluetooth
 
+async_mode = None
+
 app = Flask(__name__, template_folder='game')
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
