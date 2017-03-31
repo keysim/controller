@@ -91,12 +91,12 @@
 
 from flask import Flask, render_template, send_from_directory
 from flask_socketio import SocketIO, emit
-import threading
+# import threading
 import bluetooth
 
 app = Flask(__name__, template_folder='game')
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode=async_mode)
 
 print("Starting BLE...")
 
@@ -105,10 +105,28 @@ port = 1
 size = 1024
 room = ""
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+thread = None
 
 print("Starting socketIO and flask...")
 
 sock.connect((keyduino, port))
+
+
+def background_thread():
+    global room
+    buf = ""
+    good = ""
+    while 1:
+        data = sock.recv(size).decode('utf-8')
+        if data:
+            if data.endswith(';'):
+                buf += data
+                good = buf
+                socketio.emit('input', {'data': 'toto !'})
+                print(good)
+                buf = ""
+            else:
+                buf += data
 
 
 @app.route('/')
@@ -129,6 +147,9 @@ def test_message(message):
 
 @socketio.on('connect')
 def connect():
+    global thread
+    if thread is None:
+        thread = socketio.start_background_task(target=background_thread)
     print("connected !")
 
 
@@ -136,26 +157,8 @@ def connect():
 def send_input():
     print("penis !")
 
-
-@copy_current_request_context
-def bt_read():
-    global room
-    buf = ""
-    good = ""
-    while 1:
-        data = sock.recv(size).decode('utf-8')
-        if data:
-            if data.endswith(';'):
-                buf += data
-                good = buf
-                emit('input', {'data': 'toto !'})
-                print(good)
-                buf = ""
-            else:
-                buf += data
-
-thr = threading.Thread(target=bt_read, args=(), kwargs={})
-thr.start()
+# thr = threading.Thread(target=bt_read, args=(), kwargs={})
+# thr.start()
 
 if __name__ == '__main__':
     socketio.run(app, '0.0.0.0')
