@@ -21,7 +21,7 @@
 <script src='/game/lib/render.js'></script>
 <script>
     $(function () {
-        var socket = io("/controller");
+        var socket = io("/");
         $('form').submit(function(){
             socket.emit('chat message', $('#m').val());
             $('#m').val('');
