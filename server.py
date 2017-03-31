@@ -1,4 +1,5 @@
 import socketio
+import threading
 import eventlet
 import eventlet.wsgi
 import bluetooth
@@ -8,8 +9,6 @@ print("Starting BLE...")
 
 keyduino = "20:14:04:09:11:63"
 port = 1
-buf = ""
-good = ""
 size = 1024
 sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 
@@ -20,16 +19,23 @@ app = Flask(__name__, static_url_path='', template_folder='')
 
 sock.connect((keyduino, port))
 
-while 1:
-    data = sock.recv(size).decode('utf-8')
-    if data:
-        if data.endswith(';'):
-            buf += data
-            good = buf
-            print(good)
-            buf = ""
-        else:
-            buf += data
+thr = threading.Thread(target=bt_read, args=(), kwargs={})
+thr.start()
+
+
+def bt_read():
+    buf = ""
+    good = ""
+    while 1:
+        data = sock.recv(size).decode('utf-8')
+        if data:
+            if data.endswith(';'):
+                buf += data
+                good = buf
+                print(good)
+                buf = ""
+            else:
+                buf += data
 
 
 #
@@ -75,5 +81,5 @@ while 1:
 #     app = socketio.Middleware(sio, app)
 #     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 8000)), app)
 
-sock.close()
-print('Socket closed')
+# sock.close()
+print('END OF SCRIPT')
