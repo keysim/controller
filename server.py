@@ -112,4 +112,4 @@ def test_message(message):
     emit('input', {'data': 'got it!'})
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, '0.0.0.0')
