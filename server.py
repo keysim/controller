@@ -148,8 +148,8 @@ def test_message(message):
 
 
 @socketio.on('connect')
-def connect(sid, environ):
-    print("connect ", sid)
+def connect():
+    print("connected !")
 
 if __name__ == '__main__':
     socketio.run(app, '0.0.0.0')
