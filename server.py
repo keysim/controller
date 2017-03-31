@@ -121,7 +121,8 @@ def bt_read():
             if data.endswith(';'):
                 buf += data
                 good = buf
-                emit('input', good)
+                with app.test_request_context('/'):
+                    emit('input', good)
                 print(good)
                 print(room)
                 buf = ""
