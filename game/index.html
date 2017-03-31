@@ -32,20 +32,22 @@
             return false;
         });
         socket.on('input', function(msg){
-            if(msg.indexOf(';') != -1)
-                ready = true;
-            for(var c of msg.data){
-                if(c != ";") {
-                    input[place] = c;
-                    place++;
-                    if (place >= 4)
-                        place = 0;
+            if(msg && msg.data) {
+                if (msg.data.indexOf(';') != -1)
+                    ready = true;
+                for (var c of msg.data) {
+                    if (c != ";") {
+                        input[place] = c;
+                        place++;
+                        if (place >= 4)
+                            place = 0;
+                    }
                 }
-            }
-            if(ready){
-                for(var i = 0; i < 4; i++)
-                $("#" + i).text(input[i]);
-                ready = false;
+                if (ready) {
+                    for (var i = 0; i < 4; i++)
+                        $("#" + i).text(input[i]);
+                    ready = false;
+                }
             }
             //$('#messages').append($('<li>').text(msg.data));
         });
