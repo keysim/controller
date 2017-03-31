@@ -144,6 +144,7 @@ def send_js(path):
 
 @socketio.on('1')
 def test_message(message):
+    print("ON PRESSED")
     emit('input', {'data': 'got it!'})
 
 
