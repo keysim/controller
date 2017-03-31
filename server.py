@@ -121,6 +121,8 @@ def background_thread():
         data = sock.recv(size).decode('utf-8')
         if data:
             socketio.emit('input', {'data': data})
+        else:
+            socketio.emit('input', {'data': "nothing"})
     # while 1:
     #     data = sock.recv(size).decode('utf-8')
     #     if data:
