@@ -57,11 +57,6 @@ def connect():
     print("connected !")
 
 
-@socketio.on('input', namespace='/test')
-def send_input():
-    print("penis !")
-
-
 if thread is None:
     thread = socketio.start_background_task(target=background_thread)
 
